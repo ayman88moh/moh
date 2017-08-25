@@ -1,19 +1,129 @@
-# Build and Release Folders
-bin/
-bin-debug/
-bin-release/
-[Oo]bj/ # FlashDevelop obj
-[Bb]in/ # FlashDevelop bin
-
-# Other files and folders
-.settings/
-
-# Executables
-*.swf
-*.air
-*.ipa
-*.apk
-
-# Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
-# should NOT be excluded as they contain compiler settings and other important
-# information for Eclipse / Flash Builder.
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="15960" android:versionName="2.9.6-BETA" package="dev.ukanth.ufirewall" platformBuildVersionCode="25" platformBuildVersionName="7.1.1">
+    <uses-sdk android:minSdkVersion="15" android:targetSdkVersion="23" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_SUPERUSER" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+    <supports-screens android:anyDensity="true" android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:xlargeScreens="true" />
+    <meta-data android:name="android.support.VERSION" android:value="25.3.1" />
+    <application android:theme="@style/AppDarkTheme" android:label="@string/app_name" android:icon="@drawable/ic_launcher_free" android:name="dev.ukanth.ufirewall.util.G" android:launchMode="singleTop" android:allowBackup="false" android:hardwareAccelerated="true" android:largeHeap="true" android:supportsRtl="true" android:resizeableActivity="true" android:roundIcon="@mipmap/round_launcher_free">
+        <meta-data android:name="xposedmodule" android:value="true" />
+        <meta-data android:name="xposeddescription" android:value="Xposed related fixes for AFWall+" />
+        <meta-data android:name="xposedminversion" android:value="53" />
+        <activity android:label="@string/app_name" android:name="dev.ukanth.ufirewall.MainActivity" android:configChanges="locale|keyboard|keyboardHidden|orientation|screenLayout|screenSize" android:hardwareAccelerated="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
+            </intent-filter>
+            <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts" />
+        </activity>
+        <activity android:name="dev.ukanth.ufirewall.preferences.PreferencesActivity" android:configChanges="locale|keyboardHidden|orientation|screenLayout" android:hardwareAccelerated="true">
+            <meta-data android:name="android.support.PARENT_ACTIVITY" android:value="dev.ukanth.ufirewall.MainActivity" />
+        </activity>
+        <activity android:name="dev.ukanth.ufirewall.activity.HelpActivity" android:configChanges="locale|keyboardHidden|orientation|screenSize" android:hardwareAccelerated="true" />
+        <activity android:name="dev.ukanth.ufirewall.activity.RulesActivity" android:configChanges="locale|keyboardHidden|orientation|screenLayout" />
+        <activity android:name="dev.ukanth.ufirewall.activity.ProfileActivity" android:configChanges="locale|keyboardHidden|orientation|screenLayout" />
+        <activity android:name="dev.ukanth.ufirewall.activity.AppDetailActivity" android:configChanges="locale|keyboardHidden|orientation|screenLayout">
+            <meta-data android:name="android.support.PARENT_ACTIVITY" android:value="dev.ukanth.ufirewall.MainActivity" />
+        </activity>
+        <activity android:name="dev.ukanth.ufirewall.activity.LogActivity" android:configChanges="locale|keyboardHidden|orientation|screenLayout" />
+        <activity android:name="dev.ukanth.ufirewall.activity.OldLogActivity" android:configChanges="locale|keyboardHidden|orientation|screenLayout" />
+        <activity android:name="dev.ukanth.ufirewall.activity.LogDetailActivity" android:configChanges="locale|keyboardHidden|orientation|screenLayout" />
+        <activity android:name="dev.ukanth.ufirewall.activity.DataDumpActivity" android:configChanges="locale|keyboardHidden|orientation|screenLayout">
+            <meta-data android:name="android.support.PARENT_ACTIVITY" android:value="dev.ukanth.ufirewall.MainActivity" />
+        </activity>
+        <activity android:theme="@style/Theme_Transparent" android:name="dev.ukanth.ufirewall.widget.ToggleWidgetActivity" android:launchMode="singleInstance">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+        <activity android:theme="@style/Theme_Transparent" android:name="dev.ukanth.ufirewall.widget.ToggleWidgetOldActivity" android:launchMode="singleInstance">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+        <activity android:name="dev.ukanth.ufirewall.activity.CustomScriptActivity" android:configChanges="locale|keyboardHidden|orientation|screenLayout">
+            <meta-data android:name="android.support.PARENT_ACTIVITY" android:value="dev.ukanth.ufirewall.MainActivity" />
+        </activity>
+        <receiver android:name="dev.ukanth.ufirewall.broadcast.BootBroadcast">
+            <intent-filter android:priority="500">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="android.intent.action.MEDIA_MOUNTED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="dev.ukanth.ufirewall.broadcast.PackageBroadcast">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="dev.ukanth.ufirewall.broadcast.ConnectivityChangeReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.wifi.WIFI_AP_STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:label="@string/widget_label_status" android:icon="@drawable/preview_toggle" android:name="dev.ukanth.ufirewall.widget.StatusWidget">
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/onoff_widget" />
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="dev.ukanth.ufirewall.intent.action.STATUS_CHANGED" />
+                <action android:name="dev.ukanth.ufirewall.intent.action.TOGGLE_REQUEST" />
+            </intent-filter>
+        </receiver>
+        <receiver android:label="@string/widget_label_settings" android:icon="@drawable/preview_new" android:name="dev.ukanth.ufirewall.widget.ToggleWidget">
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/toggle_widget" />
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="dev.ukanth.ufirewall.intent.action.STATUS_CHANGED" />
+                <action android:name="dev.ukanth.ufirewall.intent.action.TOGGLE_REQUEST" />
+            </intent-filter>
+        </receiver>
+        <receiver android:label="@string/widget_label_settings_old" android:name="dev.ukanth.ufirewall.widget.ToggleWidgetOld">
+            <meta-data android:icon="@drawable/preview_old" android:name="android.appwidget.provider" android:resource="@xml/toggle_widget_old" />
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="dev.ukanth.ufirewall.intent.action.STATUS_CHANGED" />
+                <action android:name="dev.ukanth.ufirewall.intent.action.TOGGLE_REQUEST" />
+            </intent-filter>
+        </receiver>
+        <activity android:theme="@style/Alp_42447968.Theme.Dark" android:name="haibison.android.lockpattern.LockPatternActivity" android:exported="false" android:excludeFromRecents="true" android:screenOrientation="user" android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize" />
+        <receiver android:name="dev.ukanth.ufirewall.admin.AdminDeviceReceiver" android:permission="android.permission.BIND_DEVICE_ADMIN">
+            <meta-data android:name="android.app.device_admin" android:resource="@xml/device_admin" />
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+                <action android:name="android.app.action.ACTION_DEVICE_ADMIN_DISABLE_REQUESTED" />
+                <action android:name="android.app.action.ACTION_DEVICE_ADMIN_DISABLED" />
+                <action android:name="android.app.action.DEVICE_ADMIN_DISABLED" />
+            </intent-filter>
+        </receiver>
+        <activity android:label="@string/tasker_lable" android:icon="@drawable/ic_launcher_free" android:name="dev.ukanth.ufirewall.plugin.LocaleEdit" android:exported="true" android:windowSoftInputMode="adjustResize|adjustNothing" android:uiOptions="splitActionBarWhenNarrow">
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.EDIT_SETTING" />
+            </intent-filter>
+        </activity>
+        <receiver android:name="dev.ukanth.ufirewall.plugin.FireReceiver" android:exported="true">
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.FIRE_SETTING" />
+            </intent-filter>
+        </receiver>
+        <service android:name="dev.ukanth.ufirewall.service.RootShellService" />
+        <service android:name="dev.ukanth.ufirewall.service.LogService" />
+        <uses-library android:name="com.sec.android.app.multiwindow" android:required="false" />
+        <meta-data android:name="com.sec.android.multiwindow.DEFAULT_SIZE_W" android:resource="@dimen/app_defaultsize_w" />
+        <meta-data android:name="com.sec.android.multiwindow.DEFAULT_SIZE_H" android:resource="@dimen/app_defaultsize_h" />
+        <meta-data android:name="com.sec.android.multiwindow.MINIMUM_SIZE_W" android:resource="@dimen/app_minimumsize_w" />
+        <meta-data android:name="com.sec.android.multiwindow.MINIMUM_SIZE_H" android:resource="@dimen/app_minimumsize_h" />
+        <provider android:name="dev.ukanth.ufirewall.preferences.ShareProfilePreference" android:exported="true" android:authorities="dev.ukanth.ufirewall" />
+        <service android:name="dev.ukanth.ufirewall.service.RulesApplyService" android:exported="false" />
+    </application>
+</manifest>
